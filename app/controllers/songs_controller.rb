@@ -9,6 +9,9 @@ class SongsController < ApplicationController
 
   def new
     @song = Song.new
+
+    # Build 3 "empty" notes to be used by accepts_nested_attributes_for
+    3.times { @song.notes.build }
   end
 
   def create
@@ -47,7 +50,7 @@ class SongsController < ApplicationController
   private
 
   def song_params
-    params.require(:song).permit(:title)
+    params.require(:song).permit(:artist_name, :genre_id, :title, notes_attributes: [:content])
   end
 end
 
